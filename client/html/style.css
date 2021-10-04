@@ -1,0 +1,584 @@
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #2f3640;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    /*     background-color: #F5F5F5; */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #1f2533;
+}
+
+.v-input .v-input__control .v-input__slot .v-text-field__slot input::-webkit-outer-spin-button,
+.v-input .v-input__control .v-input__slot .v-text-field__slot input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+html {
+    overflow: hidden;
+}
+
+#DRX_MECHANIC {
+    background-color: transparent !important;
+}
+
+#container {
+    position: absolute;
+    top: 0;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 1000px;
+    height: 674px;
+    background-image: url(images/frame.png);
+}
+
+#content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 884px;
+    height: 554px;
+    background: #222831;
+}
+
+#navigation {
+    position: relative;
+    height: 10%;
+    width: 100%;
+}
+
+#nav-links {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 100%;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+}
+
+#nav-links .v-btn {
+    height: 100%;
+    border-bottom: transparent solid 2px;
+    transition: 300ms ease-in-out;
+}
+
+#nav-links .v-btn:disabled {
+    border-bottom: #2f3640 solid 2px;
+}
+
+
+/* ALL JOBS */
+
+.aj-box {
+    position: absolute;
+    top: 10%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80%;
+    height: 85%;
+    border-radius: 15px 15px 0px 0px;
+    background: rgba(0, 0, 0, 0.2);
+    border: solid 3px #2f3640;
+}
+
+.aj-search {
+    height: 100%;
+}
+
+.aj-search .v-text-field {
+    width: 80%;
+    border-radius: 12px 0px 0px 0px;
+}
+
+.aj-search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10%;
+    height: 57px !important;
+    border-radius: 0px 12px 0px 0px;
+    background: #1f2533 !important;
+    font-weight: 600;
+}
+
+.aj-search-clear-btn {
+    position: absolute;
+    right: 10%;
+    top: 0;
+    width: 10%;
+    height: 57px !important;
+    border-radius: 0;
+    background: #1f2533 !important;
+    font-weight: 600;
+}
+
+.aj-search-result {
+    position: absolute;
+    bottom: 0;
+    height: 87%;
+    width: 100%;
+    overflow-x: auto;
+    padding: 5px 5px;
+}
+
+.aj-search-result .v-expansion-panel {
+    background: rgba(31, 37, 51, 0.5) !important;
+}
+
+.aj-search-result .v-expansion-panel-header {
+    background: rgba(31 37 51);
+    color: rgb(232, 229, 229);
+}
+
+.aj-search-result .v-expansion-panel-content {
+    color: rgba(232, 229, 229, 0.8);
+    font-size: 1.3vh;
+    letter-spacing: 0.5;
+    margin-top: 10;
+    margin-bottom: -10;
+}
+
+.aj-search-result .v-expansion-panel-content h4 {
+    margin-left: 5;
+}
+
+.aj-search-result .v-expansion-panel-content .v-chip {
+    background: rgba(0, 0, 0, 0.2);
+    color: rgba(232, 229, 229, 0.8);
+    margin-right: 10;
+}
+
+
+/* ALL JOBS */
+
+
+/* DATABASE */
+
+.db-veh {
+    position: absolute;
+    left: 2%;
+    bottom: 2%;
+    width: 55%;
+    height: 80%;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border: solid 2px #1f2533;
+    padding: 10px 10px;
+}
+
+.db-veh-info {
+    height: 45%;
+    position: relative;
+    width: 100%;
+}
+
+.db-veh-info h3,
+h4,
+h5 {
+    font-weight: 300;
+    letter-spacing: 0.5;
+}
+
+.db-veh-info h3 {
+    color: rgb(232, 229, 229);
+    font-size: 18;
+}
+
+.db-veh-info h4 {
+    font-size: 16;
+    color: rgba(232, 229, 229, 0.8);
+}
+
+.db-veh-info h5 {
+    font-size: 14;
+    color: rgba(232, 229, 229, 0.5);
+}
+
+.db-veh-info .v-divider {
+    background: #2f3640;
+    width: 90%;
+}
+
+.db-veh-info-citizen {
+    position: absolute;
+    left: 0;
+    width: 50%;
+}
+
+.db-veh-info-veh {
+    position: absolute;
+    right: 0;
+    width: 50%;
+}
+
+.db-veh-mods {
+    position: absolute;
+    bottom: 2%;
+    left: 2%;
+    width: 96%;
+    height: 50%;
+    padding: 10px 10px;
+    border: solid 2px #1f2533;
+    border-radius: 13px;
+    display: flex;
+    overflow: auto;
+}
+
+.db-veh-mods-cards {
+    background: #1f2533 !important;
+    width: 30%;
+    height: 90%;
+    margin-top: 2%;
+    margin-right: 10px;
+    border-radius: 20px !important;
+    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.db-veh-mods-img {
+    height: 80%;
+}
+
+.db-veh-mods-cards-text {
+    color: rgba(232, 229, 229, 0.5) !important;
+    margin: 10 0;
+    padding: 0;
+    text-align: center;
+}
+
+.db-search {
+    position: absolute;
+    right: 2%;
+    bottom: 2%;
+    margin: auto;
+    width: 40%;
+    height: 80%;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border: solid 2px #1f2533;
+}
+
+.db-search .v-text-field {
+    width: 60%;
+    border-radius: 13px 0px 0px 0px;
+}
+
+.db-search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20%;
+    height: 57px !important;
+    border-radius: 0px 13px 0px 0px;
+    background: #1f2533 !important;
+    font-weight: 600;
+}
+
+.db-search-clear-btn {
+    position: absolute;
+    right: 20%;
+    top: 0;
+    width: 20%;
+    height: 57px !important;
+    border-radius: 0;
+    background: #1f2533 !important;
+    font-weight: 600;
+}
+
+.db-search-result {
+    position: absolute;
+    bottom: 0;
+    height: 88%;
+    width: 100%;
+    overflow-x: auto;
+    padding: 5px 5px;
+}
+
+.db-search-result .v-btn {
+    background: #1f2533;
+    color: rgb(232, 229, 229);
+    font-weight: 600;
+    margin: 15px 0;
+    height: 40px;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+
+/* DATABASE */
+
+
+/* AVAILABLE MODIFICATIONS */
+
+.am-wrapper {
+    height: 90%;
+    width: 100%;
+    overflow: auto;
+    padding: 10px 10px;
+}
+
+.am-cards-wrapper {
+    position: relative;
+    margin-top: 2%;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 10px 10px;
+    overflow-y: auto;
+    height: 80%;
+    width: 101%;
+}
+
+.am-cards-wrapper h2 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgb(232, 229, 229);
+}
+
+.am-cards {
+    background: #1f2533 !important;
+    width: 30%;
+    height: 90%;
+    margin-top: 4%;
+    margin-right: 12px;
+    margin-left: 12px;
+    border-radius: 20px !important;
+    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.am-cards-subtitle {
+    margin: 20px 16px 0px;
+    padding: 0;
+    color: rgb(232, 229, 229) !important;
+}
+
+.am-cards-text {
+    color: rgba(232, 229, 229, 0.5) !important;
+}
+
+
+/* AVAILABLE MODIFICATIONS */
+
+
+/* NEW JOB */
+
+
+/* MAIN */
+
+.nj-main {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 855px;
+    height: 540px;
+    overflow: auto;
+    background: #2f3640;
+    border-radius: 20px;
+}
+
+.nj-main-selectedmods {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 11%;
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 10 10;
+}
+
+.nj-main-mods {
+    padding: 10 10;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    width: 45%;
+}
+
+.nj-main-mods h3,
+h4 {
+    color: rgb(232, 229, 229);
+    letter-spacing: 0.5;
+    font-weight: 300;
+}
+
+.nj-main-mods h4 {
+    opacity: 0.8;
+}
+
+.nj-main-btns {
+    position: absolute;
+    bottom: 1%;
+    left: 0;
+    right: 0;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nj-main-btns .v-btn {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.nj-main-box {
+    position: absolute;
+    top: 5%;
+    left: 0;
+    right: 0;
+    width: 80%;
+    height: 40%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nj-main-info {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 20 20;
+    width: 45%;
+}
+
+.nj-main-info .v-divider {
+    margin-top: 20;
+    padding-bottom: 15;
+}
+
+.nj-main-info .v-icon {
+    margin-right: 5;
+}
+
+.nj-main-info h3,
+h4 {
+    font-weight: 300;
+    letter-spacing: 0.5;
+    color: rgb(232, 229, 229);
+}
+
+.nj-main-info h4 {
+    opacity: 0.8;
+}
+
+
+/* MAIN */
+
+
+/* SELECT MODIFICATIONS */
+
+.nj-box {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 855px;
+    height: 540px;
+    overflow: auto;
+    background: #2f3640;
+    border-radius: 20px;
+}
+
+.nj-close {
+    position: absolute;
+    top: 1%;
+    right: 0.5%;
+}
+
+.nj-mods-box {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 92%;
+    height: fit-content;
+    padding: 10 10;
+    border-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.nj-mods {
+    width: 30%;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5 5;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.nj-mods h3 {
+    color: rgb(232, 229, 229);
+    letter-spacing: 0.5;
+    margin-left: 2%;
+}
+
+.nj-mods-radio {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 5 5;
+}
+
+
+/* SELECT MODIFICATIONS */
+
+
+/* NEW JOB */
+
+
+/* LOADER */
+
+.loader {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 884px;
+    height: 554px;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(232, 229, 229);
+}
+
+
+/* LOADER */

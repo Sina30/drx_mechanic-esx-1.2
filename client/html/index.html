@@ -1,0 +1,303 @@
+<html>
+
+<head>
+    <meta type="text/html" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <title>Deltarix</title>
+</head>
+
+<body>
+    <div id='app' data-app>
+        <v-app id='DRX_MECHANIC' v-show='Open'>
+            <v-main>
+
+                <div id='container'>
+                    <div id='content'>
+
+                        <div id='navigation'>
+                            <div id='nav-links'>
+                                <v-btn dark plain tile :ripple='false' v-for='(tits, blonds) in Pages' :key='blonds' :disabled='CurrentPage == tits' @click='ChangePage(tits)'>{{tits}}</v-btn>
+                            </div>
+                        </div>
+
+                        <div id='page-content'>
+                            <!-- ALL JOBS PAGE -->
+                            <template v-if='CurrentPage == "ALL JOBS"'>
+                                <div class='aj-box'>
+                                    <div class='aj-search'>
+                                        <v-text-field dark v-model='SearchJobs' ref='SearchJobs' SearchJobs='' label='SEARCH' filled></v-text-field>
+                                        <v-btn dark plain elevation='0' class='aj-search-btn' small @click='SearchJobsDatabase(SearchJobs)'>SEARCH</v-btn>
+                                        <v-btn dark plain elevation='0' class='aj-search-clear-btn' small @click='SearchJobsDatabaseClear()'>CLEAR</v-btn>
+                                        <v-lazy v-model='ResultsJobsActive' :options='{threshold: 0.5}' transition='fade-transition'>
+                                            <div class='aj-search-result'>
+                                                <v-expansion-panels>
+                                                    <v-expansion-panel v-for='(jobs, jobIndex) in SearchJobResults' :key='jobs.id'>
+                                                      <v-expansion-panel-header>
+                                                        #{{jobs.id}} | PLATE: {{jobs.plate}}
+                                                      </v-expansion-panel-header>
+                                                      <v-expansion-panel-content>
+                                                        <h4>CUSTOMERS NAME</h4><v-chip>{{jobs.customer_name}}</v-chip>
+                                                      </v-expansion-panel-content>
+                                                      <v-expansion-panel-content>
+                                                        <h4>BILLED</h4><v-chip><span style='color: green;'>$</span>{{jobs.bill}}</v-chip>
+                                                      </v-expansion-panel-content>
+                                                      <v-expansion-panel-content>
+                                                        <h4>PLATE</h4><v-chip>{{jobs.plate}}</v-chip>
+                                                      </v-expansion-panel-content>
+                                                      <v-expansion-panel-content>
+                                                        <h4>MODIFICATIONS</h4><v-chip v-for='(mods, modsIndex) in jobs.upgrades' :key='modsIndex'>{{modsIndex}}: {{mods}}</v-chip>
+                                                      </v-expansion-panel-content>
+                                                      <v-expansion-panel-content>
+                                                        <h4>NOTE</h4><v-chip>{{jobs.note}}</v-chip>
+                                                      </v-expansion-panel-content>
+                                                      <v-expansion-panel-content>
+                                                        <h4>MECHANIC</h4><v-chip>{{jobs.mechanic_name}}</v-chip>
+                                                      </v-expansion-panel-content>
+                                                    </v-expansion-panel>
+                                                </v-expansion-panels>
+                                            </div>
+                                        </v-lazy>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- DATABASE PAGE -->
+                            <template v-if='CurrentPage == "DATABASE"'>
+
+                                <div class='db-veh'>
+                                    <div class='db-veh-info'>
+                                        <div class='db-veh-info-citizen'>
+                                            <h3>CITIZENS INFORMATION</h3>
+                                            <v-divider></v-divider>
+                                            <h4>Citizen ID</h4>
+                                            <h5 v-if='SelectedVehicle.identifier == null'>...</h5>
+                                            <h5 v-else-if='SelectedVehicle.identifier'>{{SelectedVehicle.identifier}}</h5>
+                                            <v-divider></v-divider>
+                                            <h4>Firstname</h4>
+                                            <h5 v-if='SelectedVehicle.firstname == null'>...</h5>
+                                            <h5 v-else-if='SelectedVehicle.firstname'>{{SelectedVehicle.firstname}}</h5>
+                                            <v-divider></v-divider>
+                                            <h4>Lastname</h4>
+                                            <h5 v-if='SelectedVehicle.lastname == null'>...</h5>
+                                            <h5 v-else-if='SelectedVehicle.lastname'>{{SelectedVehicle.lastname}}</h5>
+                                            <v-divider></v-divider>
+                                        </div>
+                                        
+                                        <div class='db-veh-info-veh'>
+                                            <h3>VEHICLE INFORMATION</h3>
+                                            <v-divider></v-divider>
+                                            <h4>Plate</h4>
+                                            <h5 v-if='SelectedVehicle.plate == null'>...</h5>
+                                            <h5 v-else-if='SelectedVehicle.plate'>{{SelectedVehicle.plate}}</h5>
+                                            <v-divider></v-divider>
+                                            <h4>Type</h4>
+                                            <h5 v-if='SelectedVehicle.type == null'>...</h5>
+                                            <h5 v-else-if='SelectedVehicle.type'>{{SelectedVehicle.type}}</h5>
+                                            <v-divider></v-divider>
+                                        </div>
+                                    </div>
+
+                                    <div class='db-veh-mods' v-if='ShowStats'>
+                                        <v-card class='db-veh-mods-cards'>
+                                            <v-btn @click='NewJob =! NewJob' plain dark style='width:100%;height:100%;background:rgba(0,0,0,0.3);border-radius:20px;'><v-icon>fas fa-plus</v-icon></v-btn>
+                                        </v-card>
+                                        <v-card class='db-veh-mods-cards'>
+                                            <v-img class='db-veh-mods-img' src='images/Brakes/brakes.png'></v-img>
+                                                <v-card-text class='db-veh-mods-cards-text' v-if='SelectedVehicle.brakes == null'>NONE</v-card-text>
+                                                <v-card-text class='db-veh-mods-cards-text' v-else-if='SelectedVehicle.brakes'>{{SelectedVehicle.brakes}}</v-card-text>
+                                        </v-card>
+                                        <v-card class='db-veh-mods-cards'>
+                                            <v-img class='db-veh-mods-img' src='images/Transmission/transmission.png'></v-img>
+                                                <v-card-text class='db-veh-mods-cards-text' v-if='SelectedVehicle.transmission == null'>NONE</v-card-text>
+                                                <v-card-text class='db-veh-mods-cards-text' v-else-if='SelectedVehicle.transmission'>{{SelectedVehicle.transmission}}</v-card-text>
+                                        </v-card>
+                                        <v-card class='db-veh-mods-cards'>
+                                            <v-img class='db-veh-mods-img' src='images/Suspension/suspension.png'></v-img>
+                                                <v-card-text class='db-veh-mods-cards-text' v-if='SelectedVehicle.suspension == null'>NONE</v-card-text>
+                                                <v-card-text class='db-veh-mods-cards-text' v-else-if='SelectedVehicle.suspension'>{{SelectedVehicle.suspension}}</v-card-text>
+                                        </v-card>
+                                        <v-card class='db-veh-mods-cards'>
+                                            <v-img class='db-veh-mods-img' src='images/Engine/engine.png'></v-img>
+                                                <v-card-text class='db-veh-mods-cards-text' v-if='SelectedVehicle.engine == null'>NONE</v-card-text>
+                                                <v-card-text class='db-veh-mods-cards-text' v-else-if='SelectedVehicle.engine'>{{SelectedVehicle.engine}}</v-card-text>
+                                        </v-card>
+                                        <v-card class='db-veh-mods-cards'>
+                                            <v-img class='db-veh-mods-img' src='images/Tune/tune.png'></v-img>
+                                                <v-card-text class='db-veh-mods-cards-text' v-if='SelectedVehicle.tune == null'>NONE</v-card-text>
+                                                <v-card-text class='db-veh-mods-cards-text' v-else-if='SelectedVehicle.tune'>{{SelectedVehicle.tune}}</v-card-text>
+                                        </v-card>
+                                    </div>
+                                </div>
+
+                                <div class='db-search'>
+                                    <v-text-field dark v-model='SearchInput' ref='SearchInput' SearchInput='' label='SEARCH' filled></v-text-field>
+                                    <v-btn dark plain elevation='0' class='db-search-btn' small @click='SearchDatabase(SearchInput)'>SEARCH</v-btn>
+                                    <v-btn dark plain elevation='0' class='db-search-clear-btn' small @click='SearchDatabaseClear()'>CLEAR</v-btn>
+                                    <v-lazy v-model='ResultsActive' :options='{threshold: 0.5}' transition='fade-transition'>
+                                        <div class='db-search-result'>
+                                            <v-btn @click='SelectVehicle(veh.plate)' v-for='(veh, index) in SearchResults' :key='veh.plate' elevation='5' plain tile>{{veh.plate}}</v-btn>
+                                        </div>
+                                    </v-lazy>
+                                </div>
+
+                            </template>
+
+                            <!-- AVAILABLE MODIFICATIONS PAGE -->
+                            <template v-if='CurrentPage == "AVAILABLE MODIFICATIONS"'>
+                                <div class='am-wrapper'>
+                                    <div class='am-cards-wrapper' v-for='(mods, modsIndex) in Modifications' :key='modsIndex'>
+                                        <h2>{{modsIndex}}</h2>
+                                        <v-card class='am-cards' v-for='(modsI, iIndex) in mods' :key='iIndex'>
+                                            <v-img class='am-cards-img' class='black--text align-end' :src='modsI.Image'></v-img>
+        
+                                            <v-card-subtitle class='am-cards-subtitle'>
+                                                Mod: {{modsI.Label}}
+                                            </v-card-subtitle>
+        
+                                            <v-card-text class='am-cards-text'>
+                                                <div>Price: ${{modsI.Price}}</div>
+        
+                                                <div>Description: {{modsI.Desc}}</div>
+                                            </v-card-text>
+                                        </v-card>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <v-fade-transition>
+                        <div class='nj-main' v-if='NewJob == true'>
+                            <v-btn class='nj-close' @click='NewJob =! NewJob' icon plain dark>
+                                <v-icon>fas fa-times</v-icon>
+                            </v-btn>
+
+                            <div class='nj-main-box'>
+                                <div class='nj-main-info'>
+                                    <h3>CUSTOMERS NAME</h3>
+                                    <h4>
+                                        <v-icon>fas fa-user</v-icon>
+                                        {{SelectedVehicle.firstname}} {{SelectedVehicle.lastname}}
+                                    </h4>
+                                    <v-divider></v-divider>
+                                    <h3>MECHANICS NAME</h3>
+                                    <h4>
+                                        <v-icon>fas fa-wrench</v-icon>
+                                        {{Firstname}} {{Lastname}}
+                                    </h4>
+                                </div>
+                                <div class='nj-main-info'>
+                                    <h3>BILL PLAYER</h3>
+                                    <v-text-field v-model='BillAmount' type='number' dark prefix='$' label='Amount to bill customer'></v-text-field>
+                                    <h3>ADD NOTE</h3>
+                                    <v-text-field v-model='Note' dark label='Add a note'></v-text-field>
+                                </div>
+                            </div>
+
+                            <div class='nj-main-selectedmods'>
+                                <div class='nj-main-mods'>
+                                    <h3>CURRENT MODIFICATIONS</h3>
+                                    <h4 v-if='CurrentBrakes == null'>BRAKES: NONE</h4>
+                                    <h4 v-else-if='CurrentBrakes'>BRAKES: {{CurrentBrakes}}</h4>
+                                    <h4 v-if='CurrentTransmission == null'>TRANSMISSION: NONE</h4>
+                                    <h4 v-else-if='CurrentTransmission'>TRANSMISSION: {{CurrentTransmission}}</h4>
+                                    <h4 v-if='CurrentSuspension == null'>SUSPENSION: NONE</h4>
+                                    <h4 v-else-if='CurrentSuspension'>SUSPENSION: {{CurrentSuspension}}</h4>
+                                    <h4 v-if='CurrentEngine == null'>ENGINE: NONE</h4>
+                                    <h4 v-else-if='CurrentEngine'>ENGINE: {{CurrentEngine}}</h4>
+                                    <h4 v-if='CurrentTune == null'>TUNE: NONE</h4>
+                                    <h4 v-else-if='CurrentTune == 0 || CurrentTune == 1'>TUNE: {{CurrentTune}}</h4>
+                                </div>
+                                <div class='nj-main-mods'>
+                                    <h3>NEW MODIFICATIONS</h3>
+                                    <h4 v-if='SelectedBrakes == null'>BRAKES: NONE</h4>
+                                    <h4 v-else-if='SelectedBrakes'>BRAKES: {{SelectedBrakes}}</h4>
+
+                                    <h4 v-if='SelectedTransmission == null'>TRANSMISSION: NONE</h4>
+                                    <h4 v-else-if='SelectedTransmission'>TRANSMISSION: {{SelectedTransmission}}</h4>
+
+                                    <h4 v-if='SelectedSuspension == null'>SUSPENSION: NONE</h4>
+                                    <h4 v-else-if='SelectedSuspension'>SUSPENSION: {{SelectedSuspension}}</h4>
+
+                                    <h4 v-if='SelectedEngine == null'>ENGINE: NONE</h4>
+                                    <h4 v-else-if='SelectedEngine'>ENGINE: {{SelectedEngine}}</h4>
+
+                                    <h4 v-if='SelectedTune == null'>TUNE: NONE</h4>
+                                    <h4 v-else-if='SelectedTune == 0 || SelectedTune == 1'>TUNE: {{SelectedTune}}</h4>
+                                </div>
+                            </div>
+
+                            <div class='nj-main-btns'>
+                                <v-btn @click='SelectMods =! SelectMods' plain dark>SELECT MODIFICATIONS</v-btn>
+                                <v-btn @click='ConfirmMod()' plain dark>CONFIRM MODIFICATIONS</v-btn>
+                            </div>
+                        </div>
+                    </v-fade-transition>
+
+                    <v-fade-transition>
+                        <div class='nj-box' v-if='SelectMods == true'>
+                            <v-btn class='nj-close' @click='SelectMods =! SelectMods' icon plain dark>
+                                <v-icon>fas fa-times</v-icon>
+                            </v-btn>
+
+                            <div class='nj-mods-box'>
+                                <v-radio-group class='nj-mods' v-model='SelectedBrakes'>
+                                    <h3>BRAKES</h3>
+                                    <v-radio dark class='nj-mods-radio' v-for='(mods, index) in Modifications.Brakes' :key='index' :label='mods.Label' :value='mods.Upgrade'></v-radio>
+                                </v-radio-group>
+                                <v-radio-group class='nj-mods' v-model='SelectedTransmission'>
+                                    <h3>TRANSMISSION</h3>
+                                    <v-radio dark class='nj-mods-radio' v-for='(mods, index) in Modifications.Transmission' :key='index' :label='mods.Label' :value='mods.Upgrade'></v-radio>
+                                </v-radio-group>
+                                <v-radio-group class='nj-mods' v-model='SelectedSuspension'>
+                                    <h3>SUSPENSION</h3>
+                                    <v-radio dark class='nj-mods-radio' v-for='(mods, index) in Modifications.Suspension' :key='index' :label='mods.Label' :value='mods.Upgrade'></v-radio>
+                                </v-radio-group>
+                                <v-radio-group class='nj-mods' v-model='SelectedEngine'>
+                                    <h3>ENGINE</h3>
+                                    <v-radio dark class='nj-mods-radio' v-for='(mods, index) in Modifications.Engine' :key='index' :label='mods.Label' :value='mods.Upgrade'></v-radio>
+                                </v-radio-group>
+                                <v-radio-group class='nj-mods' v-model='SelectedTune'>
+                                    <h3>TURBO</h3>
+                                    <v-radio dark class='nj-mods-radio' v-for='(mods, index) in Modifications.Turbo' :key='index' :label='mods.Label' :value='mods.Upgrade'></v-radio>
+                                </v-radio-group>
+                            </div>
+
+                        </div>
+                    </v-fade-transition>
+
+                    <div class='loader' v-if="loading == 'loader'">
+                        <p>Loading<span id='wait'>.</span></p>
+                    </div>
+                </div>
+
+            </v-main>
+        </v-app>
+    </div>
+
+    <script>
+        var dots = window.setInterval(function() {
+            if (drx_mechanic.loading == 'loader') {
+                var wait = document.getElementById('wait');
+                if (wait.innerHTML.length >= 3)
+                    wait.innerHTML = '';
+                else
+                    wait.innerHTML += '.';
+            }
+        }, 100);
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="javascript.js"></script>
+</body>
+
+</html>
