@@ -6,7 +6,7 @@
 Requirements:
 - mysql-async
 - mythic_notify
-- esx legacy
+- esx 1.2
 
 Installation:
 - Insert drx.sql into your database.
